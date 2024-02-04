@@ -6,8 +6,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import smtplib
 import requests
-load_dotenv()
 import numpy as np
+
+load_dotenv()
 
 def resend_verification(email):
     # Call FastAPI email verification service
@@ -56,7 +57,7 @@ def send_email(subject, message, to_address):
     msg['To'] = to_address
     msg['Subject'] = subject
     msg.attach(MIMEText(message, 'plain'))
-    server = smtplib.SMTP_SSL('mail.privateemail.com', 465)
+    server = smtplib.SMTP_SSL('mail.soroushsabbaghan.com', 465)
     server.login(from_address, password)
     text = msg.as_string()
     server.sendmail(from_address, to_address, text)
@@ -96,4 +97,3 @@ def register_new_user():
             st.success('Great! Now please complete registration by confirming your email address. Then login above!')
     except Exception as e:
         st.error(e)
-

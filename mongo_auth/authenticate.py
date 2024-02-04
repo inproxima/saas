@@ -34,7 +34,7 @@ class Authenticate:
         self.key = key
         self.cookie_expiry_days = cookie_expiry_days
         self.cookie_manager = stx.CookieManager()
-        self.db_name = 'smartbids'
+        self.db_name = 'insightica'
 
         if 'name' not in st.session_state:
             st.session_state['name'] = None
@@ -459,7 +459,7 @@ class Authenticate:
         new_password = register_user_form.text_input('Password', type='password')
         new_password_repeat = register_user_form.text_input('Repeat password', type='password')
         postal_code = register_user_form.text_input('Your postal code')
-        needs = register_user_form.radio('I want to', ["Buy", "Sell", "Both", "I am a realtor"])
+        #needs = register_user_form.radio('I want to', ["Buy", "Sell", "Both", "I am a realtor"])
         client = MongoClient(self.mongo_uri)
         db = client[self.db_name]
         users = db['users']
@@ -470,14 +470,14 @@ class Authenticate:
                         if new_password == new_password_repeat:
                             if preauthorization:
                                 if self.preauthorized.find_one({'email': new_email}) is not None:
-                                    self._register_credentials(new_email, new_name, new_password, preauthorization, needs, postal_code)
+                                    self._register_credentials(new_email, new_name, new_password, preauthorization, postal_code)
                                     client.close()
                                     return True
                                 else:
                                     client.close()
                                     raise RegisterError('User not preauthorized to register')
                             else:
-                                self._register_credentials(new_email, new_name, new_password, preauthorization, needs, postal_code)
+                                self._register_credentials(new_email, new_name, new_password, preauthorization, postal_code)
                                 client.close()
                                 return True
                         else:
