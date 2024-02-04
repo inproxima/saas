@@ -50,18 +50,17 @@ def reset_password():
             st.error(e)
 
 def send_email(subject, message, to_address):
-    from_address = os.getenv("YOUR_EMAIL")
+    # Your send_email logic, unchanged from before
+    from_address = 'inproxima@gmail.com'
     password = os.getenv("YOUR_EMAIL_PASS")
     msg = MIMEMultipart()
-    msg['From'] = from_address
+    msg['From'] = "Insightica - Email verification <" + from_address + ">"
     msg['To'] = to_address
     msg['Subject'] = subject
-    msg.attach(MIMEText(message, 'plain'))
-    server = smtplib.SMTP_SSL('mail.soroushsabbaghan.com', 465)
-    server.login(from_address, password)
-    text = msg.as_string()
-    server.sendmail(from_address, to_address, text)
-    server.quit()
+    html_message = (MIMEText(message, 'html'))
+    with smtplib.SMTP_SSL('smtp.gmail.com', 465) as server:
+        server.login(from_address, password)
+        server.sendmail(from_address, to_address, html_message.as_string())
 
 
 def forgot_username():
