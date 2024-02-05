@@ -34,7 +34,7 @@ class Authenticate:
         self.key = key
         self.cookie_expiry_days = cookie_expiry_days
         self.cookie_manager = stx.CookieManager()
-        self.db_name = 'smartbids'
+        self.db_name = 'insightica'
 
         if 'name' not in st.session_state:
             st.session_state['name'] = None
