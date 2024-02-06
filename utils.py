@@ -13,7 +13,7 @@ load_dotenv()
 def resend_verification(email):
     # Call FastAPI email verification service
     verification_url = os.getenv("VERIFICATION_URL")
-    data = {'email': email}
+    data = {'email': email, 'id':'sting'}
     response = requests.post(verification_url, json=data)
     if response.status_code != 200:
         st.error(f"Failed to resend verification email: {response.text}")
