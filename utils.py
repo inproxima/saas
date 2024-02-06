@@ -51,10 +51,11 @@ def reset_password():
 
 def send_email(subject, message, to_address):
     # Your send_email logic, unchanged from before
+    subject = "Email varificaiton"
     from_address = 'inproxima@gmail.com'
     password = os.getenv("YOUR_EMAIL_PASS")
     msg = MIMEMultipart()
-    msg['From'] = "Insightica - Email verification <" + from_address + ">"
+    msg['From'] = "Soroush's SaaS - Email verification <" + from_address + ">"
     msg['To'] = to_address
     msg['Subject'] = subject
     html_message = (MIMEText(message, 'html'))
@@ -67,8 +68,8 @@ def forgot_username():
     try:
         username_forgot_username, email_forgot_username = st.session_state['authenticator'].forgot_username('Forgot username')
         if username_forgot_username:
-            subject = 'Your SmartBids Username'
-            message = f'Your SmartBids username is: {username_forgot_username}'
+            subject = 'Your Username'
+            message = f'Your username is: {username_forgot_username}'
             send_email(subject, message, email_forgot_username)
             st.success('Username sent securely')
         else:
@@ -80,8 +81,8 @@ def forgot_password():
     try:
         username_forgot_pw, email_forgot_password, random_password = st.session_state['authenticator'].forgot_password('Forgot password')
         if username_forgot_pw:
-            subject = 'Your SmartBids New Password'
-            message = f'Your new SmartBids password is: {random_password}. Please login and reset your password.'
+            subject = 'Your new Password'
+            message = f'Your new  password is: {random_password}. Please login and reset your password.'
             send_email(subject, message, email_forgot_password)
             st.success('New password sent securely')
         else:
