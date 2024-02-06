@@ -76,7 +76,7 @@ if st.session_state['verified'] and st.session_state["authentication_status"]:
             #webbrowser.open_new_tab()
         else:
             response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
+            model="gpt-4",
             messages=[
                     {'role': 'system', 'content': f'You are a helpful assistant.'},
                 {"role": "user", "content": f"Translate the text below to the language {language}: \n INPUT: ```{input2}```"}
