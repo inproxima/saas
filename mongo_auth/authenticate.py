@@ -387,7 +387,7 @@ class Authenticate:
 
 
         # Call FastAPI email verification service after successfully adding to users and Octupus list
-        verification_url = os.get_environ("VERIFICATION_URL")
+        verification_url = os.getenv("VERIFICATION_URL")
         data = {'email': email, 'id': '123'}
         response = requests.post(verification_url, json=data)
         if response.status_code != 200:
