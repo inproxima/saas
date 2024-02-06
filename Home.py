@@ -15,7 +15,7 @@ st.set_page_config(page_title="SaaS", page_icon=":house", layout="centered", ini
 # Load environment variables
 
 # Display the main title
-st.markdown('# Your SaaS App')
+st.markdown("# Soroush's App")
 
 # Initialize the authenticator
 st.session_state['authenticator'] = Authenticate("coolcookiesd267", "keyd3214", 60)
@@ -104,5 +104,5 @@ elif st.session_state["authentication_status"] == False:
 
 # Handle actions for new users or users with no authentication status
 elif st.session_state["authentication_status"] == None:
-    st.warning('New to SaaS app? Register below.')
+    st.warning("New to Soroush'SaaS? Register below.")
     register_new_user()
