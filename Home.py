@@ -158,9 +158,9 @@ if st.session_state['verified'] and st.session_state["authentication_status"]:
     
     # Display subscription status
     if st.session_state.get('subscribed'):
-        st.write('You are subscribed!')
+        st.success('Subcription status: You are subscribed!')
     else:
-        st.info('You are not subscribed!')
+        st.info('Subcription status: You are not subscribed!')
         st.error('Please subscribe to use this tool!')
         st.link_button('Subscribe', os.getenv('STRIPE_PAYMENT_URL'))
 
