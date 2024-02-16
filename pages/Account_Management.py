@@ -30,8 +30,10 @@ name, authentication_status, username = st.session_state['authenticator'].login(
 def delete_user(email, mongo_uri, db_name):
     try:
         # Connect to the MongoDB database
+        mongo_uri = os.environ['MONGO_AUTH']
         client = MongoClient(mongo_uri)
-        db = client[db_name]
+        db = client['insightica']
+        users = db['users'] 
 
         # Delete the user information from the 'users' collection based on the email
         result = db.users.delete_one({'email': email})
