@@ -5,7 +5,6 @@ from dotenv import load_dotenv
 from mongo_auth import Authenticate
 import os
 import stripe
-import webbrowser
 load_dotenv(".env")
 
 st.title('Account Settings')
@@ -28,6 +27,26 @@ def reset_password():
 
 name, authentication_status, username = st.session_state['authenticator'].login('Login', 'main')
 
+def delete_user(email, mongo_uri, db_name):
+    try:
+        # Connect to the MongoDB database
+        client = MongoClient(mongo_uri)
+        db = client[db_name]
+
+        # Delete the user information from the 'users' collection based on the email
+        result = db.users.delete_one({'email': email})
+
+        # Close the database connection
+        client.close()
+
+        # Check if the deletion was successful
+        if result.deleted_count > 0:
+            return f"User with email {email} has been successfully deleted."
+        else:
+            return f"No user found with email {email}. No deletion performed."
+    except Exception as e:
+        return str(e)
+
 # Define function to cancel subscriptions based on email
 def cancel_subscriptions(email):
     try:
@@ -46,10 +65,11 @@ def cancel_subscriptions(email):
             # Cancel all subscriptions for the customer ID
             for subscription in subscriptions:
                 stripe.Subscription.delete(subscription.id)
-                # Open a new tab to the Stripe website for cancellation confirmation
-                webbrowser.open_new_tab(f"https://dashboard.stripe.com/subscriptions/{subscription.id}")
+                # New button to the Stripe website for cancellation confirmation
+                st.note("Click button to go to stripe for confirmation")
+                st.link_button("Go to Stripe" f"https://dashboard.stripe.com/subscriptions/{subscription.id}")
         
-        return f"All subscriptions for {email} have been canceled. Check your Stripe dashboard for confirmation."
+        return f"All subscriptions for {email} have been canceled. click button to check Stripe for confirmation"
     except Exception as e:
         return str(e)
 
@@ -62,6 +82,7 @@ if st.session_state["authentication_status"]:
     if st.session_state.get('subscribed'):
         with st.expander('Manage subscription'):
             if st.button('Cancel subscription'):
+                db_response = delete_user(st.session_state.get('email'))
                 response = cancel_subscriptions(st.session_state.get('email'))
                 st.success(response)
 
