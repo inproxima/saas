@@ -5,6 +5,7 @@ from dotenv import load_dotenv
 from mongo_auth import Authenticate
 import os
 import stripe
+import webbrowser
 load_dotenv(".env")
 
 st.title('Account Settings')
@@ -45,8 +46,10 @@ def cancel_subscriptions(email):
             # Cancel all subscriptions for the customer ID
             for subscription in subscriptions:
                 stripe.Subscription.delete(subscription.id)
+                # Open a new tab to the Stripe website for cancellation confirmation
+                webbrowser.open_new_tab(f"https://dashboard.stripe.com/subscriptions/{subscription.id}")
         
-        return f"All subscriptions for {email} have been canceled."
+        return f"All subscriptions for {email} have been canceled. Check your Stripe dashboard for confirmation."
     except Exception as e:
         return str(e)
 
