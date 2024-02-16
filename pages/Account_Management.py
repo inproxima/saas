@@ -75,7 +75,7 @@ def cancel_subscriptions(email):
                 st.info("Click button to go to stripe for confirmation")
                 st.link_button("Go to Stripe", f"https://dashboard.stripe.com/subscriptions/{subscription.id}")
         
-        return f"All subscriptions for {email} have been canceled. click button to check Stripe for confirmation"
+        return f"All subscriptions for {email} have been canceled. All your data have been removed from our database"
     except Exception as e:
         return str(e)
 

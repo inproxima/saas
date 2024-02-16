@@ -130,10 +130,6 @@ def delete_file(filename: str) -> None:
     except FileNotFoundError:
         st.write(f"{filename} not found.")
 
-
-# Display the main title
-st.markdown("# Soroush's App")
-
 # Initialize the authenticator
 st.session_state['authenticator'] = Authenticate("coolcookiesd267", "keyd3214", 60)
 
@@ -164,9 +160,9 @@ if st.session_state['verified'] and st.session_state["authentication_status"]:
     if st.session_state.get('subscribed'):
         st.write('You are subscribed!')
     else:
-        st.write('You are not subscribed!')
-
-
+        st.info('You are not subscribed!')
+        st.error('Please subscribe to use this tool!')
+        st.link_button('Subscribe', os.getenv('STRIPE_PAYMENT_URL'))
 
     st.title("SARA")
     st.write("Scholarly Academic Research Assistant")
