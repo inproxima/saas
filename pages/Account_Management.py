@@ -68,7 +68,7 @@ def cancel_subscriptions(email):
             for subscription in subscriptions:
                 stripe.Subscription.delete(subscription.id)
                 # New button to the Stripe website for cancellation confirmation
-                st.note("Click button to go to stripe for confirmation")
+                st.info("Click button to go to stripe for confirmation")
                 st.link_button("Go to Stripe" f"https://dashboard.stripe.com/subscriptions/{subscription.id}")
         
         return f"All subscriptions for {email} have been canceled. click button to check Stripe for confirmation"
