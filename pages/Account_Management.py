@@ -27,7 +27,7 @@ def reset_password():
 
 name, authentication_status, username = st.session_state['authenticator'].login('Login', 'main')
 
-def delete_user(email, mongo_uri, db_name):
+def delete_user(email):
     try:
         # Connect to the MongoDB database
         mongo_uri = os.environ['MONGO_AUTH']
